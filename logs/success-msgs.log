@@ -1,0 +1,25 @@
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-06T21:18:45.312Z","totalBundlesSent":21,"totalMessagesProcessed":39}
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-06T21:18:46.872Z","totalBundlesSent":22,"totalMessagesProcessed":41}
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-06T21:18:48.045Z","totalBundlesSent":23,"totalMessagesProcessed":43}
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-06T21:18:49.518Z","totalBundlesSent":24,"totalMessagesProcessed":45}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-06T21:18:51.038Z","totalBundlesSent":25,"totalMessagesProcessed":46}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-06T21:18:52.143Z","totalBundlesSent":26,"totalMessagesProcessed":47}
+{"level":"info","message":"Server shutdown initiated","service":"msg-app","signal":"SIGTERM","timestamp":"2025-03-06T22:02:11.304Z"}
+{"level":"info","message":"Server shutdown initiated","service":"msg-app","signal":"SIGINT","timestamp":"2025-03-08T09:36:33.505Z"}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T09:42:37.939Z","totalBundlesSent":1,"totalMessagesProcessed":1}
+{"level":"info","message":"Server shutdown initiated","service":"msg-app","signal":"SIGINT","timestamp":"2025-03-08T09:47:08.294Z"}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:23.824Z","totalBundlesSent":1,"totalMessagesProcessed":1}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:31.113Z","totalBundlesSent":2,"totalMessagesProcessed":2}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:32.243Z","totalBundlesSent":3,"totalMessagesProcessed":3}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:36.708Z","totalBundlesSent":4,"totalMessagesProcessed":4}
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:37.944Z","totalBundlesSent":5,"totalMessagesProcessed":6}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:39.407Z","totalBundlesSent":6,"totalMessagesProcessed":7}
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:42.609Z","totalBundlesSent":7,"totalMessagesProcessed":9}
+{"bundleSize":5,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:43.774Z","totalBundlesSent":8,"totalMessagesProcessed":14}
+{"bundleSize":2,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:47.700Z","totalBundlesSent":9,"totalMessagesProcessed":16}
+{"bundleSize":3,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:48.996Z","totalBundlesSent":10,"totalMessagesProcessed":19}
+{"bundleSize":3,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:50.217Z","totalBundlesSent":11,"totalMessagesProcessed":22}
+{"bundleSize":6,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:51.478Z","totalBundlesSent":12,"totalMessagesProcessed":28}
+{"bundleSize":6,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:52.632Z","totalBundlesSent":13,"totalMessagesProcessed":34}
+{"bundleSize":1,"level":"info","message":"Bundle saved to MongoDB","service":"msg-app","timestamp":"2025-03-08T13:00:53.761Z","totalBundlesSent":14,"totalMessagesProcessed":35}
+{"level":"info","message":"Server shutdown initiated","service":"msg-app","signal":"SIGINT","timestamp":"2025-03-08T13:15:30.270Z"}
