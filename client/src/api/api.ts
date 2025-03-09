@@ -1,6 +1,5 @@
-import { API_URL, WS_URL } from '../config'
+import { API_URL } from '../config'
 import { IMessage } from './types'
-
 
 export const getMessages = async (): Promise<IMessage[]> => {
   const response = await fetch(`${API_URL}/msg`)
@@ -9,6 +8,3 @@ export const getMessages = async (): Promise<IMessage[]> => {
   }
   return response.json()
 }
-
-
-export const socket = new WebSocket(WS_URL)

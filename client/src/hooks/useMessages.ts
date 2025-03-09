@@ -1,33 +1,26 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import uuid from "react-uuid"
-import { getMessages, socket } from '../api/api'
+import uuid from 'react-uuid'
+import { getMessages } from '../api/api'
+import { socketService } from '../api/ws'
 import { IMessage } from '../api/types'
 import { useEffect } from 'react'
 
-
-const updateMessages = (oldMessages: IMessage[], newMessages: IMessage[]) => {
-  const updatedMessages = oldMessages.map(oldMessage => {
-    const newMessage = newMessages.find(msg => msg._id === oldMessage._id)
-    return newMessage && newMessage.text !== oldMessage.text
-      ? { ...oldMessage, text: newMessage.text }
-      : oldMessage
+const mergeMessages = (existingMessages: IMessage[], newMessages: IMessage[]) => {
+  const updatedMessages = existingMessages.map((existingMessage) => {
+    const updatedMessage = newMessages.find((msg) => msg._id === existingMessage._id)
+    return updatedMessage && updatedMessage.text !== existingMessage.text
+      ? { ...existingMessage, text: updatedMessage.text }
+      : existingMessage
   })
 
-  newMessages.forEach(newMessage => {
-    if (!oldMessages.some(oldMessage => oldMessage._id === newMessage._id)) {
+  newMessages.forEach((newMessage) => {
+    if (!existingMessages.some((msg) => msg._id === newMessage._id)) {
       updatedMessages.push(newMessage)
     }
   })
 
-  const uniqueMessagesMap = new Map()
-
-  updatedMessages.forEach(message => {
-    uniqueMessagesMap.set(message._id, message)
-  })
-  
-  console.log(updatedMessages)
-
-  return Array.from(uniqueMessagesMap.values()).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+  const uniqueMessages = Array.from(new Map(updatedMessages.map((msg) => [msg._id, msg])).values())
+  return uniqueMessages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 }
 
 export const useMessages = () => {
@@ -38,56 +31,31 @@ export const useMessages = () => {
     queryFn: getMessages,
   })
 
-  const sendMessage = (message: string) => {
-    if (socket.readyState === WebSocket.OPEN) {
-      const newMessage: IMessage = {
-        _id: uuid(),
-        text: message,
-        createdAt: new Date(),
-      }
-      socket.send(JSON.stringify({ type: 'sendMessage', data: newMessage }))
-
-      queryClient.setQueryData<IMessage[]>(['messages'], (oldMessages) => {
-        return [
-        ...updateMessages(
-        [newMessage], 
-        (oldMessages || []))
-      ]
-      })
-    } else {
-      console.error('WebSocket is not open')
+  const handleIncomingMessages = (event: MessageEvent) => {
+    const eventData: { type: 'messages'; messages: IMessage[] } = JSON.parse(event.data)
+    if (eventData.type === 'messages') {
+      queryClient.setQueryData<IMessage[]>(['messages'], (existingMessages) =>
+        mergeMessages(eventData.messages || [], existingMessages || []),
+      )
     }
   }
 
   useEffect(() => {
-    
-    const onNewMessages = (event: MessageEvent) => {
+    socketService.initializeSocket(handleIncomingMessages)
+    return () => socketService.closeSocket()
+  }, [])
 
-      const eventData: {type: "messages", messages: IMessage[]} = JSON.parse(event.data)
-
-      if (eventData.type === 'messages') {
-        queryClient.setQueryData<IMessage[]>(['messages'], (oldMessages) => {
-          return [
-          ...updateMessages(
-          (eventData.messages || []), 
-          (oldMessages || []))]
-        })
-      }
-
+  const sendMessage = (text: string) => {
+    const newMessage: IMessage = {
+      _id: uuid(),
+      text,
+      createdAt: new Date(),
     }
-
-    if (socket.readyState === WebSocket.OPEN) {
-      socket.addEventListener('message', onNewMessages)
-    } else {
-      socket.addEventListener('open', () => {
-        socket.addEventListener('message', onNewMessages)
-      })
-    }
-
-    return () => {
-      socket.removeEventListener('message', onNewMessages)
-    }
-  }, [queryClient])
+    socketService.sendMessageViaSocket(newMessage)
+    queryClient.setQueryData<IMessage[]>(['messages'], (existingMessages) =>
+      mergeMessages([newMessage], existingMessages || []),
+    )
+  }
 
   return { messages, isLoading, isError, sendMessage }
 }

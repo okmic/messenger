@@ -2,6 +2,7 @@ import { WebSocketServer, WebSocket } from 'ws'
 import { DatabaseService } from '../mongo/mongo.service'
 import { MessageBundleProcessor } from './msg-batch.processor.service'
 import { v4 } from 'uuid'
+import { logger } from '../winston/winston.service'
 
 export class WSService {
   private wss: WebSocketServer
@@ -16,44 +17,60 @@ export class WSService {
   public start(): void {
 
     this.wss.on('connection', (ws: WebSocket) => {
-      const msgDb = this.databaseService.getDb().collection('messages')
 
-      msgDb.watch().on('change', async (change) => {
-        if (change.operationType === 'insert') {
-          const messages = await msgDb
-            .find()
-            .toArray()
+      try {
+        const msgDb = this.databaseService.getDb().collection('messages')
 
-          ws.send(JSON.stringify({ type: 'messages', messages }))
-        }
-      })
+        msgDb.watch().on('change', async (change) => {
+          if (change.operationType === 'insert') {
+            const messages = await msgDb
+              .find()
+              .toArray()
 
-      ws.on('message', (data: string) => {
+            ws.send(JSON.stringify({ type: 'messages', messages }))
+          }
+        })
 
-        const message: {
-          type: 'sendMessage',
+        ws.on('message', (data: string) => {
 
-          data: {
-               _id?: string
-               text: string
-               createdAt?: string
-             }
-          } = JSON.parse(data)
+          try {
+            const message: {
+              type: 'sendMessage',
 
-        if (message.type === 'sendMessage' && message.data.text) {
-          this.messageBundleProcessor.addMessageToBundle({
-            _id: message.data._id || undefined,
-            createdAt: (message.data.createdAt && new Date(message.data.createdAt)) || new Date(),
-            text: message.data.text,
-          })
-        }
-      })
+              data: {
+                _id?: string
+                text: string
+                createdAt?: string
+              }
+            } = JSON.parse(data)
+            console.log(message)
+            if (message.type === 'sendMessage' && message.data.text) {
+              this.messageBundleProcessor.addMessageToBundle({
+                _id: message.data._id || undefined,
+                createdAt: (message.data.createdAt && new Date(message.data.createdAt)) || new Date(),
+                text: message.data.text,
+              })
+            }
+          } catch (e) {
+            console.log(e)
+            logger.error(e)
+          }
+
+        })
 
 
-      ws.on('close', () => {
-        msgDb.watch().close()
-        ws.removeAllListeners('message')
-      })
+        ws.on('close', () => {
+          try {
+            msgDb.watch().close()
+            ws.removeAllListeners('message')
+          } catch (e) {
+            logger.error(e)
+          }
+        })
+      } catch (e) {
+        logger.error(e)
+      }
     })
+
   }
 }
