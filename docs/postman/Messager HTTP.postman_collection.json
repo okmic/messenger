@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "9d49a2be-89ef-413f-a17a-388e1a22d8d1",
+		"name": "Messager HTTP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38238859"
+	},
+	"item": [
+		{
+			"name": "msg",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"ddddddddddd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1369/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1369",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msg",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"Test msg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1369/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1369",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
