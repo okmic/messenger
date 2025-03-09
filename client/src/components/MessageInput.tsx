@@ -13,7 +13,7 @@ export const MessageInput = ({ onSendMessage }: MessageInputProps) => {
       onSendMessage(newMessage)
       setNewMessage('')
     }
-  }
+}
 
   return (
     <Box display="flex" gap={2}>

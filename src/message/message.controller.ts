@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { MessageBundleProcessor } from './msg-batch.processor.service'
+import { v4 } from 'uuid'
 
 export class MessageController {
 
@@ -12,7 +13,7 @@ export class MessageController {
       return
     }
 
-    const message = { text, createdAt: new Date() }
+    const message = {_id: v4(), text, createdAt: new Date()}
     this.messageBundleProcessor.addMessageToBundle(message)
     reply.status(201).send({ message: 'Message added to batch' })
   }

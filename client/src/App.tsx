@@ -3,6 +3,7 @@ import { Container, Box, Typography } from '@mui/material'
 import { useMessages } from './hooks/useMessages'
 import { MessageList } from './components/MessageList'
 import { MessageInput } from './components/MessageInput'
+import { IMessage } from './api/types'
 
 const App: React.FC = () => {
   const { messages, isLoading, isError, sendMessage } = useMessages()
@@ -16,7 +17,7 @@ const App: React.FC = () => {
         <Typography variant="h4" textAlign="center" mb={2}>
           Messager
         </Typography>
-        <MessageList messages={messages || []} />
+        <MessageList messages={messages as IMessage[] || []} />
         <MessageInput onSendMessage={sendMessage} />
       </Box>
     </Container>

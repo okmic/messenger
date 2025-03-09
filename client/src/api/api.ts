@@ -1,9 +1,8 @@
-import { Message } from './types'
+import { API_URL, WS_URL } from '../config'
+import { IMessage } from './types'
 
-const API_URL = 'http://localhost:1369'
-const WS_URL = 'ws://localhost:6969'
 
-export const getMessages = async (): Promise<Message[]> => {
+export const getMessages = async (): Promise<IMessage[]> => {
   const response = await fetch(`${API_URL}/msg`)
   if (!response.ok) {
     throw new Error('Ошибка при загрузке сообщений')
@@ -11,17 +10,5 @@ export const getMessages = async (): Promise<Message[]> => {
   return response.json()
 }
 
-export const sendMessage = async (text: string): Promise<void> => {
-  const response = await fetch(`${API_URL}/msg`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ text }),
-  })
-  if (!response.ok) {
-    throw new Error('Ошибка при отправке сообщения')
-  }
-}
 
 export const socket = new WebSocket(WS_URL)

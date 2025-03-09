@@ -1,10 +1,7 @@
 import { DatabaseService } from '../mongo/mongo.service'
 import { logger } from '../winston/winston.service'
-
-interface Message {
-  text: string
-  createdAt: Date
-}
+import { Message } from './types'
+import { WebSocketServer } from 'ws'
 
 export class MessageBundleProcessor {
   private messageBundle: Message[] = []
@@ -12,7 +9,10 @@ export class MessageBundleProcessor {
   private totalMessagesProcessed: number = 0
   private totalBundlesSent: number = 0
 
-  constructor(private databaseService: DatabaseService) {}
+  constructor(
+    private databaseService: DatabaseService,
+    private wss: WebSocketServer, 
+  ) {}
 
   public addMessageToBundle(message: Message): void {
     this.messageBundle.push(message)
@@ -70,8 +70,8 @@ export class MessageBundleProcessor {
     }
   }
 
-
   public startBundleProcessing(): void {
+    
     const shutdownHandler = async (signal: string) => {
       logger.info('Server shutdown initiated', { signal })
       await this.flushBundle()
