@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start:dev": "concurrently \"nodemon src/index.ts\""
+    "start:dev": "concurrently \"nodemon src/index.ts\" \" cd client && yarn dev\""
   },
   "dependencies": {
     "@fastify/cors": "^11.0.0",

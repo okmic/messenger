@@ -21,4 +21,5 @@ export class MessageController {
     const messages = await this.messageBundleProcessor.getMessages()
     reply.send(messages)
   }
+  
 }

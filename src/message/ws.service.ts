@@ -11,8 +11,6 @@ export class WSService {
   public start(port: number): void {
 
     this.wss.on('connection', (ws: WebSocket) => {
-      console.log('New WebSocket connection')
-
       const changeStream = this.databaseService.getDb().collection('messages').watch()
 
       changeStream.on('change', (change) => {
@@ -23,7 +21,6 @@ export class WSService {
       })
 
       ws.on('close', () => {
-        console.log('WebSocket connection closed')
         changeStream.close()
       })
     })

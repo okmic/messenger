@@ -60,7 +60,6 @@ export class MessageBundleProcessor {
       const collection = this.databaseService.getDb().collection<Message>('messages')
       const messages = await collection.find().toArray()
 
-
       return messages
     } catch (error) {
       logger.error('Failed to fetch messages from MongoDB', {
